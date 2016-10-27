@@ -1,0 +1,184 @@
+<aside>
+    <div id="sidebar"  class="nav-collapse ">
+    <button type="button" class="btn btn-warning shift-down" ng-click="clearData()" ng-confirm="Are you sure you want to clear the data?">Clear Data</button>
+
+        <!-- sidebar menu start
+
+        <ul class="sidebar-menu" id="nav-accordion">
+            
+            <h5 class="centered">Ingredients Added</h5>
+
+            <li ng-animate="'animate'"class="animatedRepeat" ng-repeat="ingredient in chosen_ingredients">
+                <a class="" ng-click="remove(chosen_ingredients, $index)">
+                  <div class="row">
+                    <span class="col-lg-9">
+                      <i class="fa fa-check-circle"></i>{{ingredient.name}}
+                    </span>
+                    <span class="col-lg-2">
+                      <i class="fa fa-close" ng-click="remove(chosen_ingredients, $index)"></i>
+                    </span>
+                  </div>
+                </a>
+            </li>
+            <li ng-animate="'animate'" class="excludedIngredient animatedRepeat" ng-repeat="ingredient in excluded_ingredients">
+                <a class="excludedIngredient">
+                  <div class="row">
+                    <span class="col-lg-9">
+                      <i class="fa fa-ban"></i>{{ingredient.name}}
+                    </span>
+                    <span class="col-lg-2">
+                      <i class="fa fa-close" ng-click="remove(excluded_ingredients, $index)"></i>
+                    </span>
+                  </div>
+                </a>
+            </li>
+        </ul>
+        -->
+
+       <ul class="sidebar-menu" id="nav-accordion">
+            <h5 class="centered">Ingredients Added</h5>
+
+            <li ng-animate="'animate'"class="animatedRepeat"  ng-repeat="ingredient in chosen_ingredients">
+                <a class="ingredientText">
+                    <span><i class="fa fa-check-circle"></i>{{ingredient.name}}</span><i class="fa fa-close" style="float: right; margin-right: 10px; margin-top: 5px" ng-click="remove(chosen_ingredients, $index)"></i>
+                </a>
+            </li>
+            <li ng-animate="'animate'" class="excludedIngredient animatedRepeat" ng-repeat="ingredient in excluded_ingredients">
+                <a class="excludedIngredient ingredientText" >
+                    <span><i class="fa fa-ban"></i>{{ingredient.name}}</span><i class="fa fa-close" style="float: right; margin-right: 10px; margin-top: 5px" ng-click="remove(excluded_ingredients, $index)"></i>
+                </a>
+            </li>
+        </ul>
+        <hr>
+        <h5 class="centered">Ingredient Filter</h5>
+        <div style=" text-align: center; margin: 0 auto;">
+          <span style="color: white;" >Use only these ingredients </span><input name="onlyOrAll" type="checkbox" ng-model="only" checked>
+        </div>
+        <hr>
+        <div style=" text-align: center; margin: 0 auto;">
+          <h5 class="centered" >You may want to add...</h5>
+          <span ng-repeat="ingredient in suggestedIngredients"></span>
+        </div>
+        <hr>
+        <h5 class="centered">Meal Filter</h5>
+        <div style=" text-align: center; margin: 0 auto;">
+          <span style="color: white;" >All</span><input name="meal" type="radio" ng-model="allMeals" checked>
+          <span style="color: white;" >Breakfast</span><input name="meal" type="radio" ng-model="breakfast">
+          <span style="color: white;" >Lunch</span><input name="meal" type="radio" ng-model="lunch">
+          <span style="color: white;" >Dinner</span><input name="meal" type="radio" ng-model="dinner">
+          <span style="color: white;" >Snack</span><input name="meal" type="radio" ng-model="snack">
+        </div>
+        <hr>
+        <h5 class="centered">Diet Filter</h5>
+        <div style=" text-align: center; margin: 0 auto;">
+          <span style="color: white;" >All</span><input name="diet" type="radio" ng-model="allDiets" checked>
+          <span style="color: white;" >Paleo</span><input name="diet" type="radio" ng-model="paleo">
+          <span style="color: white;" >Vegetarian</span><input name="diet" type="radio" ng-model="vegetarian">
+          <span style="color: white;" >Vegan</span><input name="diet" type="radio" ng-model="vegan">
+        </div>
+        <hr>
+        <h5 class="centered">Cuisine Filter</h5>
+        <div style=" text-align: center; margin: 0 auto;">
+          <span style="color: white;" >All</span><input name="diet" type="radio" ng-model="allCuisines" checked>
+          <span style="color: white;" >American</span><input name="diet" type="radio" ng-model="american">
+          <span style="color: white;" >Chinese</span><input name="diet" type="radio" ng-model="chinese">
+          <span style="color: white;" >Mexican</span><input name="diet" type="radio" ng-model="mexican">
+          <span style="color: white;" >Indian</span><input name="diet" type="radio" ng-model="indian">
+        </div>
+        <!-- sidebar menu end-->
+    </div>
+</aside>
+<!--sidebar end-->
+
+<!-- **********************************************************************************************************************************************************
+MAIN CONTENT
+*********************************************************************************************************************************************************** -->
+<!--main content start-->
+<section id="main-content">
+    <section class="wrapper">
+
+        <div class="row">
+            <div class="col-lg-8 main-chart">
+
+              <div class="row mtbox">
+                <div class="col-md-8 col-md-offset-2 box0">
+                  <div class="box1">
+                    <span class="li_search"></span>
+                    <h3>Add Ingredients</h3>
+                  </div>
+                  <div class="input-group">
+                    <input type="text" class="form-control" ng-model="match" ng-keyup="queryIngredients(match)" ng-enter="insert(match)" placeholder="Search Ingredients...To exclude, type 'not' followed by ingredient name" autofocus>
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button" ng-click="insert(match)"><strong>+</strong></button>
+                    </span>
+                  </div>
+                  <ul class="foodlist">
+                    <li class="searchIngredientResults" ng-if="match.length > 0" class="repeated-item food cf shrink animatedRepeat" ng-animate="'animate'" ng-repeat="ingredient in query_result">
+                      <a href="#/search" ng-click="switchAndDisplay(ingredient)">
+                      <div class="info inline">
+                        <h2>{{ingredient.name}}</h2>
+                      </div></a>
+                    </li>
+                  </ul>
+                  <!-- /input-group -->
+                  <p>Find ingredients you want to be in the recipe</p>
+                </div>
+
+              </div><!-- /row mt -->
+              <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-5 popRecipe" ng-repeat="recipe in topRecipes">
+                <div class="grey-panel pn donut-chart">
+                  <div class="grey-header">
+                    <h5>{{recipe.name}}<span ng-if="recipe.totalTimeInSeconds != 0"> - {{recipe.totalTimeInSeconds/60}} Minutes</span></h5>
+                  </div>
+                  <div class="row">
+                    <div class="centered">
+
+                      <img class = "shrink-pic" ng-src="{{recipe.images[0].hostedLargeUrl}}"/>
+                    </div>
+                    <br>
+                    <button type="button" class="btn btn-theme04" ng-click="details($index)">View Recipe</button>
+                  </div>
+                  <h2><i class="fa fa-heart"></i><span ng-if="recipe.rating != 0">{{recipe.rating}} </span></h2>
+                  
+                </div><! --/grey-panel -->
+              </div><!-- /col-md-6-->
+              </div>
+            </div><!-- /col-lg-9 END SECTION MIDDLE -->
+<!-- **********************************************************************************************************************************************************
+RIGHT SIDEBAR CONTENT
+*********************************************************************************************************************************************************** -->                  
+            
+            <div class="col-lg-4 ds rightBarFix2">
+              <h3 class="rightBarFix">Recipes Containing Added Ingredients</h3>
+                                  
+                <div ng-animate="'animate'" class="desc animatedRepeat recipeResultContainer" ng-repeat="recipe in recipes" ng-init="recipeHover" ng-mouseover="recipeHover=true" ng-mouseleave="recipeHover=false">
+                  <div class="thumb">
+                    <span class="badge bg-theme">
+                      <i class="fa fa-star"></i>
+                    </span>
+                  </div>
+                  <div class="details">
+                    <p>
+                    {{recipe.recipeName}} - {{recipe.totalTimeInSeconds/60}} minutes
+
+                    </p>
+
+                    <a class="recipePreviewLink" href="#/search" ng-click="details($index+2)">View Recipe</a>
+                  </div>
+                  <div>
+                     <img class="imgPreview" ng-src="{{recipe.smallImageUrls[0]}}">
+                     </div>
+                </div>
+                
+
+            </div><!-- /col-lg-3 -->
+        </div><!-- /row -->
+    </section>
+</section>
+
+
+<script>
+$("#sidebar").niceScroll({styler:"fb",cursorcolor:"#4ECDC4", cursorwidth: '3', cursorborderradius: '10px', background: '#404040', spacebarenabled:false, cursorborder: '', autohidemode: true});
+</script>

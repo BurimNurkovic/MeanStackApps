@@ -1,0 +1,14 @@
+  // Service
+    .factory('MeanStackApp', ['$http', function($http){
+      return $http.get('/MeanStackApp');
+    }])
+
+    // Controller
+    .controller('MeanStackAppController', ['$scope', 'MeanStackApp', function ($scope, MeanStackApp) {
+      MeanStackApp.success(function(data){
+        $scope.MeanStackApp = data;
+      }).error(function(data, status){
+        console.log(data, status);
+        $scope.MeanStackApp = [];
+      });
+    }])
